@@ -1,0 +1,133 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
+using Pars.RM.RetailApi.MobileStoreApi.Domain.MSServiceModels.MSRequestModels.{{ entity.name | string.pascalcase | string.plural }};
+using Pars.RM.RetailApi.MobileStoreApi.Domain.MSServiceModels.DomainModels.{{ entity.name | string.pascalcase | string.plural }};
+using Pars.Core.Cache;
+
+namespace Pars.RM.RetailApi.MobileStoreApi.Data.Repository.{{ entity.name | string.pascalcase | string.plural }}
+{
+    public class {{ entity.name | string.pascalcase }}Repository : I{{ entity.name | string.pascalcase }}Repository
+    {
+        private readonly RetailManagementContext _retailmngmtDbContext;
+        private readonly ICacheManager _cacheManager;
+
+        public {{ entity.name | string.pascalcase }}Repository(RetailManagementContext retailmngmtDbContext, ICacheManager cacheManager)
+        {
+            _retailmngmtDbContext = retailmngmtDbContext;
+            _cacheManager = cacheManager;
+        }
+
+        public async Task<{{ entity.name | string.pascalcase }}Entity> Get{{ entity.name | string.pascalcase }}ById(Get{{ entity.name | string.pascalcase }}ByIdRequest get{{ entity.name | string.pascalcase }}ByIdRequest)
+        {
+            var cacheKey = $"{{ entity.name | string.pascalcase }}:{get{{ entity.name | string.pascalcase }}ByIdRequest.{{ entity.name | string.pascalcase }}Id}";
+            var cachedEntity = _cacheManager.Get<{{ entity.name | string.pascalcase }}Entity>(cacheKey);
+
+            if (cachedEntity != null)
+                return cachedEntity;
+
+            var entity = await _retailmngmtDbContext.{{ entity.name | string.pascalcase | string.plural  }}
+                .AsNoTracking()
+                .Select(e => new {{ entity.name | string.pascalcase }}Entity
+                       {
+                           {{ entity.name | string.pascalcase }}Id = e.{{ entity.name | string.pascalcase }}Id,
+                           {{- for propertyItem in entity.properties }}
+                           {{ propertyItem.name | string.pascalcase }} = e.{{ propertyItem.name | string.pascalcase }},
+                           {{- end }}
+                       })
+                .FirstOrDefaultAsync(e => e.{{ entity.name | string.pascalcase }}Id == get{{ entity.name | string.pascalcase }}ByIdRequest.Id);
+
+            if (entity != null)
+                _cacheManager.Set(cacheKey, entity, TimeSpan.FromMinutes(10));
+
+            return entity;
+        }
+
+        public async Task<List<{{ entity.name | string.pascalcase }}Entity>> GetAll{{ entity.name | string.pascalcase }}()
+        {
+            var cacheKey = $"{{ entity.name | string.pascalcase }}:All";
+            var cachedList = _cacheManager.Get<List<{{ entity.name | string.pascalcase }}Entity>>(cacheKey);
+
+            if (cachedList != null)
+                return cachedList;
+
+            var entityList = await _retailmngmtDbContext.{{ entity.name | string.pascalcase | string.plural }}
+                       .AsNoTracking()
+                       .Select(e => new {{ entity.name | string.pascalcase }}Entity
+                       {
+                           {{ entity.name | string.pascalcase }}Id = e.{{ entity.name | string.pascalcase }}Id,
+                           {{- for propertyItem in entity.properties }}
+                           {{ propertyItem.name | string.pascalcase }} = e.{{ propertyItem.name | string.pascalcase }},
+                           {{- end }}
+                       })
+                       .ToListAsync();
+
+
+            if (entityList.Any())
+                _cacheManager.Set(cacheKey, entityList, TimeSpan.FromMinutes(10));
+
+            return entityList;
+        }
+
+        public async Task<bool> Create{{ entity.name | string.pascalcase }}(Create{{ entity.name | string.pascalcase }}Request createRequest)
+        {
+            var newEntity = new {{ entity.name | string.pascalcase }}Entity
+            {
+                // Diğer alanları CreateRequest'ten al ve ata.
+                {{- for propertyItem in entity.properties }}
+                {{ propertyItem.name | string.pascalcase }} = createRequest.{{ propertyItem.name | string.pascalcase }},
+                {{- end }}
+            };
+
+            await _retailmngmtDbContext.AddAsync(newEntity);
+            await _retailmngmtDbContext.SaveChangesAsync();
+
+            _cacheManager.Remove($"{{ entity.name | string.pascalcase }}:All");
+
+            return true;
+        }
+
+        public async Task<bool> Update{{ entity.name | string.pascalcase }}(Update{{ entity.name | string.pascalcase }}Request updateRequest)
+        {
+            var entityToUpdate = await _retailmngmtDbContext.{{ entity.name | string.pascalcase | string.plural }}
+                .FirstOrDefaultAsync(e => e.{{ entity.name | string.pascalcase }}Id == updateRequest.{{ entity.name | string.pascalcase }}Id);
+
+            if (entityToUpdate == null)
+                return false;
+
+            // Alanları güncelle
+            {{- for propertyItem in entity.properties }}
+            entityToUpdate.{{ propertyItem.name | string.pascalcase }} = updateRequest.{{ propertyItem.name | string.pascalcase }};
+            {{- end }}
+
+            _retailmngmtDbContext.Update(entityToUpdate);
+            await _retailmngmtDbContext.SaveChangesAsync();
+
+            var cacheKey = $"{{ entity.name | string.pascalcase }}:{updateRequest.{{ entity.name | string.pascalcase }}Id}";
+            _cacheManager.Remove(cacheKey);
+            _cacheManager.Remove($"{{ entity.name | string.pascalcase }}:All");
+
+            return true;
+        }
+
+        public async Task<bool> Delete{{ entity.name | string.pascalcase }}(Delete{{ entity.name | string.pascalcase }}Request deleteRequest)
+        {
+            var entityToDelete = await _retailmngmtDbContext.{{ entity.name | string.pascalcase | string.plural }}
+                .FirstOrDefaultAsync(e => e.{{ entity.name | string.pascalcase }}Id == deleteRequest.{{ entity.name | string.pascalcase }}Id);
+
+            if (entityToDelete == null)
+                return false;
+
+            _retailmngmtDbContext.Remove(entityToDelete);
+            await _retailmngmtDbContext.SaveChangesAsync();
+
+            var cacheKey = $"{{ entity.name | string.pascalcase }}:{deleteRequest.{{ entity.name | string.pascalcase }}Id}";
+            _cacheManager.Remove(cacheKey);
+            _cacheManager.Remove($"{{ entity.name | string.pascalcase }}:All");
+
+            return true;
+        }
+    }
+}

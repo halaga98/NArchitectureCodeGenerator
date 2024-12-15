@@ -1,0 +1,35 @@
+﻿using Pars.Core.Cqrs.Commands;
+using Pars.RM.RetailApi.MobileStoreApi.Business.{{ entity.name | string.pascalcase | string.plural}}.Commands;
+using Pars.RM.RetailApi.MobileStoreApi.Data.Repository.{{ entity.name | string.pascalcase | string.plural}};
+using Pars.RM.RetailApi.MobileStoreApi.Domain.MSServiceModels.MSResponseModels.{{ entity.name | string.pascalcase | string.plural}};
+using System;
+using System.Threading.Tasks;
+
+namespace Pars.RM.RetailApi.MobileStoreApi.Business.{{ entity.name | string.pascalcase | string.plural}}.Handlers
+{
+    public class Create{{ entity.name | string.pascalcase }}Handler : ICommandHandler<Create{{ entity.name | string.pascalcase }}Command>
+    {
+        private readonly I{{ entity.name | string.pascalcase }}Repository _{{ entity.name | string.camelcase }}Repository;
+        public Create{{ entity.name | string.pascalcase }}Handler(I{{ entity.name | string.pascalcase }}Repository {{ entity.name | string.camelcase }}Repository)
+        {
+            _{{ entity.name | string.camelcase }}Repository = {{ entity.name | string.camelcase }}Repository;
+        }
+        public async Task<CommandResponse> HandleAsync(Create{{ entity.name | string.pascalcase }}Command command)
+        {
+            Create{{ entity.name | string.pascalcase }}Response create{{ entity.name | string.pascalcase }}Response = new Create{{ entity.name | string.pascalcase }}Response();
+            try
+            {
+                create{{ entity.name | string.pascalcase }}Response.IsCreated = await _{{ entity.name | string.camelcase }}Repository.Create{{ entity.name | string.pascalcase }}(command.Create{{ entity.name | string.pascalcase }}Request);
+            }
+            catch (Exception ex)
+            {
+                create{{ entity.name | string.pascalcase }}Response.HasError = true;
+                create{{ entity.name | string.pascalcase }}Response.ResultMessage = ex.Message;
+            }
+
+            CommandResponse commandResponse = new CommandResponse(create{{ entity.name | string.pascalcase }}Response);
+
+            return commandResponse;
+        }
+    }
+} 

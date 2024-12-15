@@ -1,0 +1,14 @@
+﻿using Pars.RM.RetailApi.MobileStoreApi.Domain.MSServiceModels.DomainModels.{{ entity.name | string.pascalcase | string.plural }};
+namespace Pars.RM.RetailApi.MobileStoreApi.Domain.MSServiceModels.MSResponseModels.{{ entity.name | string.pascalcase | string.plural }}
+{
+
+    public class GetAll{{ entity.name | string.pascalcase }}Response : ResponseBase
+    {
+           public List<{{ entity.name | string.pascalcase }}Entity> {{ entity.name | string.pascalcase }}EntityList { get; set; }
+
+              public GetAll{{ entity.name | string.pascalcase }}Response()
+        {
+            {{ entity.name | string.pascalcase }}EntityList = new List<{{ entity.name | string.pascalcase }}Entity>();
+        }
+    }
+}

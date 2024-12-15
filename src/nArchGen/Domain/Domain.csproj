@@ -1,0 +1,44 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\corePackages\Core.CodeGen\Core.CodeGen.csproj" />
+    <ProjectReference Include="..\..\corePackages\Core.CrossCuttingConcerns\Core.CrossCuttingConcerns.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <ContentWithTargetPath Include="Templates\**">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <TargetPath>Templates\%(RecursiveDir)\%(Filename)%(Extension)</TargetPath>
+    </ContentWithTargetPath>
+  </ItemGroup>
+  <ItemGroup>
+    <ContentWithTargetPath Remove="Templates\CRUD\Folders\Pars.RM.RetailApi.MobileStoreApi.Business\PLURAL_ENTITY\Commands\CreateENTITYCommand.cs.sbn" />
+    <ContentWithTargetPath Remove="Templates\CRUD\Folders\Pars.RM.RetailApi.MobileStoreApi.Business\PLURAL_ENTITY\Commands\DeleteENTITYCommand.cs.sbn" />
+    <ContentWithTargetPath Remove="Templates\CRUD\Folders\Pars.RM.RetailApi.MobileStoreApi.Business\PLURAL_ENTITY\Commands\GetAllENTITYCommand.cs.sbn" />
+    <ContentWithTargetPath Remove="Templates\CRUD\Folders\Pars.RM.RetailApi.MobileStoreApi.Business\PLURAL_ENTITY\Commands\GetENTITYByIdCommand.cs.sbn" />
+    <ContentWithTargetPath Remove="Templates\CRUD\Folders\Pars.RM.RetailApi.MobileStoreApi.Business\PLURAL_ENTITY\Commands\UpdateENTITYCommand.cs.sbn" />
+    <ContentWithTargetPath Remove="Templates\CRUD\Folders\Pars.RM.RetailApi.MobileStoreApi.Business\PLURAL_ENTITY\Handlers\CreateENTITYHandler.cs.sbn" />
+    <ContentWithTargetPath Remove="Templates\CRUD\Folders\Pars.RM.RetailApi.MobileStoreApi.Business\PLURAL_ENTITY\Handlers\DeleteENTITYHandler.cs.sbn" />
+    <ContentWithTargetPath Remove="Templates\CRUD\Folders\Pars.RM.RetailApi.MobileStoreApi.Business\PLURAL_ENTITY\Handlers\GetAllENTITYHandler.cs.sbn" />
+    <ContentWithTargetPath Remove="Templates\CRUD\Folders\Pars.RM.RetailApi.MobileStoreApi.Business\PLURAL_ENTITY\Handlers\GetENTITYByIdHandler.cs.sbn" />
+    <ContentWithTargetPath Remove="Templates\CRUD\Folders\Pars.RM.RetailApi.MobileStoreApi.Business\PLURAL_ENTITY\Handlers\UpdateENTITYHandler.cs.sbn" />
+    <ContentWithTargetPath Remove="Templates\CRUD\Folders\Pars.RM.RetailApi.MobileStoreApi.Data\Repository\PLURAL_ENTITY\ENTITYRepository.cs.sbn.sbn" />
+    <ContentWithTargetPath Remove="Templates\CRUD\Folders\Pars.RM.RetailApi.MobileStoreApi.Data\Repository\PLURAL_ENTITY\IENTITYRepository.cs.sbn" />
+    <ContentWithTargetPath Remove="Templates\CRUD\Folders\Pars.RM.RetailApi.MobileStoreApi.Domain\MSServiceModels\DomainModels\PLURAL_ENTITY\ENTITYEntity.cs.sbn" />
+    <ContentWithTargetPath Remove="Templates\CRUD\Folders\Pars.RM.RetailApi.MobileStoreApi.Domain\MSServiceModels\DomainModels\PLURAL_ENTITY\GetENTITYEntity.cs.sbn" />
+    <ContentWithTargetPath Remove="Templates\CRUD\Folders\Pars.RM.RetailApi.MobileStoreApi.Domain\MSServiceModels\MSRequestModels\PLURAL_ENTITY\CreateENTITYRequest.cs.sbn" />
+    <ContentWithTargetPath Remove="Templates\CRUD\Folders\Pars.RM.RetailApi.MobileStoreApi.Domain\MSServiceModels\MSRequestModels\PLURAL_ENTITY\DeleteENTITYRequest.cs.sbn" />
+    <ContentWithTargetPath Remove="Templates\CRUD\Folders\Pars.RM.RetailApi.MobileStoreApi.Domain\MSServiceModels\MSRequestModels\PLURAL_ENTITY\GetAllENTITYRequest.cs.sbn" />
+    <ContentWithTargetPath Remove="Templates\CRUD\Folders\Pars.RM.RetailApi.MobileStoreApi.Domain\MSServiceModels\MSRequestModels\PLURAL_ENTITY\GetENTITYByIdRequest.cs.sbn" />
+    <ContentWithTargetPath Remove="Templates\CRUD\Folders\Pars.RM.RetailApi.MobileStoreApi.Domain\MSServiceModels\MSRequestModels\PLURAL_ENTITY\UpdateENTITYRequest.cs.sbn" />
+    <ContentWithTargetPath Remove="Templates\CRUD\Folders\Pars.RM.RetailApi.MobileStoreApi.Domain\MSServiceModels\MSResponseModels\PLURAL_ENTITY\CreateENTITYResponse.cs.sbn" />
+    <ContentWithTargetPath Remove="Templates\CRUD\Folders\Pars.RM.RetailApi.MobileStoreApi.Domain\MSServiceModels\MSResponseModels\PLURAL_ENTITY\DeleteENTITYResponse.cs.sbn" />
+    <ContentWithTargetPath Remove="Templates\CRUD\Folders\Pars.RM.RetailApi.MobileStoreApi.Domain\MSServiceModels\MSResponseModels\PLURAL_ENTITY\GetAllENTITYResponse.cs.sbn" />
+    <ContentWithTargetPath Remove="Templates\CRUD\Folders\Pars.RM.RetailApi.MobileStoreApi.Domain\MSServiceModels\MSResponseModels\PLURAL_ENTITY\GetENTITYByIdResponse.cs.sbn" />
+    <ContentWithTargetPath Remove="Templates\CRUD\Folders\Pars.RM.RetailApi.MobileStoreApi.Domain\MSServiceModels\MSResponseModels\PLURAL_ENTITY\UpdateENTITYResponse.cs.sbn" />
+    <ContentWithTargetPath Remove="Templates\CRUD\Folders\WebAPI\Controllers\PLURAL_ENTITYController.cs.sbn" />
+  </ItemGroup>
+</Project>

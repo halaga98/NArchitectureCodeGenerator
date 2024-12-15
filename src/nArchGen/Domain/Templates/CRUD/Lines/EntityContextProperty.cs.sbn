@@ -1,0 +1,3 @@
+public DbSet<tb_{{ entity.name | string.pascalcase }}> {{ entity.name | string.pascalcase | string.plural }} { get; set; }
+modelBuilder.Entity<tb_{{ entity.name }}>().HasKey(k => k.{{ entity.name }}Id);
+modelBuilder.Entity<tb_{{ entity.name }}>().ToTable("tb_{{ entity.name }}", "MSI");

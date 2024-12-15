@@ -1,0 +1,37 @@
+﻿using Pars.Core.Cqrs.Commands;
+using Pars.RM.RetailApi.MobileStoreApi.Business.{{ entity.name | string.pascalcase | string.plural}}.Commands;
+using Pars.RM.RetailApi.MobileStoreApi.Data.Repository.{{ entity.name | string.pascalcase | string.plural}};
+using Pars.RM.RetailApi.MobileStoreApi.Domain.MSServiceModels.MSResponseModels.{{ entity.name | string.pascalcase | string.plural}};
+using System;
+using System.Threading.Tasks;
+
+namespace Pars.RM.RetailApi.MobileStoreApi.Business.{{ entity.name | string.pascalcase | string.plural}}.Handlers
+{
+    public class Update{{ entity.name | string.pascalcase }}Handler : ICommandHandler<Update{{ entity.name | string.pascalcase }}Command>
+    {
+        private readonly I{{ entity.name | string.pascalcase }}Repository _{{ entity.name | string.camelcase }}Repository;
+        
+        public Update{{ entity.name | string.pascalcase }}Handler(I{{ entity.name | string.pascalcase }}Repository {{ entity.name | string.camelcase }}Repository)
+        {
+            _{{ entity.name | string.camelcase }}Repository = {{ entity.name | string.camelcase }}Repository;
+        }
+
+        public async Task<CommandResponse> HandleAsync(Update{{ entity.name | string.pascalcase }}Command command)
+        {
+            Update{{ entity.name | string.pascalcase }}Response update{{ entity.name | string.pascalcase }}Response = new Update{{ entity.name | string.pascalcase }}Response();
+            
+            try
+            {
+                update{{ entity.name | string.pascalcase }}Response.IsUpdated = await _{{ entity.name | string.camelcase }}Repository.Update{{ entity.name | string.pascalcase }}(command.Update{{ entity.name | string.pascalcase }}Request);
+            }
+            catch (Exception ex)
+            {
+                update{{ entity.name | string.pascalcase }}Response.HasError = true;
+                update{{ entity.name | string.pascalcase }}Response.ResultMessage = ex.Message;
+            }
+
+            CommandResponse commandResponse = new CommandResponse(update{{ entity.name | string.pascalcase }}Response);
+            return commandResponse;
+        }
+    }
+}

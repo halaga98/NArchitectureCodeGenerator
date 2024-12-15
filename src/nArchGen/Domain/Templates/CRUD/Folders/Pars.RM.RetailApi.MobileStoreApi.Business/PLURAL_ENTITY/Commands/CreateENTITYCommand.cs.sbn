@@ -1,0 +1,19 @@
+﻿ using Pars.Core.Cqrs.Commands;
+using Pars.RM.RetailApi.MobileStoreApi.Domain.MSServiceModels.MSRequestModels.{{ entity.name | string.pascalcase | string.plural}};
+
+namespace Pars.RM.RetailApi.MobileStoreApi.Business.{{ entity.name | string.pascalcase | string.plural}}.Commands
+{
+    public class Create{{ entity.name | string.pascalcase }}Command : ICommand
+    {
+        private Create{{ entity.name | string.pascalcase }}Request create{{ entity.name | string.pascalcase }}Request { get; set; }
+        public Create{{ entity.name | string.pascalcase }}Request Create{{ entity.name | string.pascalcase }}Request
+        {
+            get { return create{{ entity.name | string.pascalcase }}Request; }
+            set { create{{ entity.name | string.pascalcase }}Request = value; }
+        }
+        public Create{{ entity.name | string.pascalcase }}Command(Create{{ entity.name | string.pascalcase }}Request create{{ entity.name | string.pascalcase }}Request)
+        {
+            this.create{{ entity.name | string.pascalcase }}Request = create{{ entity.name | string.pascalcase }}Request;
+        }
+    }
+}

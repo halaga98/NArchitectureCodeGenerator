@@ -1,0 +1,9 @@
+﻿namespace Pars.RM.RetailApi.MobileStoreApi.Domain.MSServiceModels.MSResponseModels.{{ entity.name | string.pascalcase | string.plural }}
+{
+
+    public class Create{{ entity.name | string.pascalcase }}Response : ResponseBase
+    {
+            public bool IsCreated { get; set; }
+        
+    }
+}

@@ -1,0 +1,37 @@
+﻿using Pars.Core.Cqrs.Commands;
+using Pars.RM.RetailApi.MobileStoreApi.Business.{{ entity.name | string.pascalcase | string.plural}}.Commands;
+using Pars.RM.RetailApi.MobileStoreApi.Data.Repository.{{ entity.name | string.pascalcase | string.plural}};
+using Pars.RM.RetailApi.MobileStoreApi.Domain.MSServiceModels.MSResponseModels.{{ entity.name | string.pascalcase | string.plural}};
+using System;
+using System.Threading.Tasks;
+
+namespace Pars.RM.RetailApi.MobileStoreApi.Business.{{ entity.name | string.pascalcase | string.plural}}.Handlers
+{
+    public class Delete{{ entity.name | string.pascalcase }}Handler : ICommandHandler<Delete{{ entity.name | string.pascalcase }}Command>
+    {
+        private readonly I{{ entity.name | string.pascalcase }}Repository _{{ entity.name | string.camelcase }}Repository;
+        
+        public Delete{{ entity.name | string.pascalcase }}Handler(I{{ entity.name | string.pascalcase }}Repository {{ entity.name | string.camelcase }}Repository)
+        {
+            _{{ entity.name | string.camelcase }}Repository = {{ entity.name | string.camelcase }}Repository;
+        }
+
+        public async Task<CommandResponse> HandleAsync(Delete{{ entity.name | string.pascalcase }}Command command)
+        {
+            Delete{{ entity.name | string.pascalcase }}Response delete{{ entity.name | string.pascalcase }}Response = new Delete{{ entity.name | string.pascalcase }}Response();
+            
+            try
+            {
+                delete{{ entity.name | string.pascalcase }}Response.IsDeleted = await _{{ entity.name | string.camelcase }}Repository.Delete{{ entity.name | string.pascalcase }}(command.Delete{{ entity.name | string.pascalcase }}Request);
+            }
+            catch (Exception ex)
+            {
+                delete{{ entity.name | string.pascalcase }}Response.HasError = true;
+                delete{{ entity.name | string.pascalcase }}Response.ResultMessage = ex.Message;
+            }
+
+            CommandResponse commandResponse = new CommandResponse(delete{{ entity.name | string.pascalcase }}Response);
+            return commandResponse;
+        }
+    }
+}

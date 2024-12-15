@@ -1,0 +1,16 @@
+﻿using Pars.RM.RetailApi.MobileStoreApi.Domain.MSServiceModels.MSRequestModels.{{ entity.name | string.pascalcase | string.plural }};
+using System.Threading.Tasks;
+using Pars.RM.RetailApi.MobileStoreApi.Domain.MSServiceModels.DomainModels.{{ entity.name | string.pascalcase | string.plural }};
+using System.Collections.Generic;
+
+namespace Pars.RM.RetailApi.MobileStoreApi.Data.Repository.{{ entity.name | string.pascalcase | string.plural }}
+{
+    public interface I{{ entity.name | string.pascalcase }}Repository
+    {        
+        Task<{{ entity.name | string.pascalcase }}Entity> Get{{ entity.name | string.pascalcase }}ById(Get{{ entity.name | string.pascalcase}}ByIdRequest get{{ entity.name | string.pascalcase | string.plural }}ByIdRequest);
+        Task<List<{{ entity.name | string.pascalcase }}Entity>> GetAll{{ entity.name | string.pascalcase }}();
+        Task<bool> Create{{ entity.name | string.pascalcase }} (Create{{ entity.name | string.pascalcase  }}Request create{{ entity.name | string.pascalcase | string.plural }}Request);
+        Task<bool> Update{{ entity.name | string.pascalcase }} (Update{{ entity.name | string.pascalcase  }}Request update{{ entity.name | string.pascalcase | string.plural }}Request);
+        Task<bool> Delete{{ entity.name | string.pascalcase }} (Delete{{ entity.name | string.pascalcase  }}Request delete{{ entity.name | string.pascalcase | string.plural }}Request);
+    }
+}

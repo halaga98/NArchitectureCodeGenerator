@@ -1,0 +1,37 @@
+﻿using Pars.Core.Cqrs.Commands;
+using Pars.RM.RetailApi.MobileStoreApi.Business.{{ entity.name | string.pascalcase | string.plural}}.Commands;
+using Pars.RM.RetailApi.MobileStoreApi.Data.Repository.{{ entity.name | string.pascalcase | string.plural}};
+using Pars.RM.RetailApi.MobileStoreApi.Domain.MSServiceModels.MSResponseModels.{{ entity.name | string.pascalcase | string.plural}};
+using System;
+using System.Threading.Tasks;
+
+namespace Pars.RM.RetailApi.MobileStoreApi.Business.{{ entity.name | string.pascalcase | string.plural}}.Handlers
+{
+    public class GetAll{{ entity.name | string.pascalcase }}Handler : ICommandHandler<GetAll{{ entity.name | string.pascalcase }}Command>
+    {
+        private readonly I{{ entity.name | string.pascalcase }}Repository _{{ entity.name | string.camelcase }}Repository;
+        
+        public GetAll{{ entity.name | string.pascalcase }}Handler(I{{ entity.name | string.pascalcase }}Repository {{ entity.name | string.camelcase }}Repository)
+        {
+            _{{ entity.name | string.camelcase }}Repository = {{ entity.name | string.camelcase }}Repository;
+        }
+
+        public async Task<CommandResponse> HandleAsync(GetAll{{ entity.name | string.pascalcase }}Command command)
+        {
+            GetAll{{ entity.name | string.pascalcase }}Response getAll{{ entity.name | string.pascalcase }}Response = new GetAll{{ entity.name | string.pascalcase }}Response();
+            
+            try
+            {
+                getAll{{ entity.name | string.pascalcase }}Response.EntityList = await _{{ entity.name | string.camelcase }}Repository.GetAll{{ entity.name | string.pascalcase }}();
+            }
+            catch (Exception ex)
+            {
+                getAll{{ entity.name | string.pascalcase }}Response.HasError = true;
+                getAll{{ entity.name | string.pascalcase }}Response.ResultMessage = ex.Message;
+            }
+
+            CommandResponse commandResponse = new CommandResponse(getAll{{ entity.name | string.pascalcase }}Response);
+            return commandResponse;
+        }
+    }
+}

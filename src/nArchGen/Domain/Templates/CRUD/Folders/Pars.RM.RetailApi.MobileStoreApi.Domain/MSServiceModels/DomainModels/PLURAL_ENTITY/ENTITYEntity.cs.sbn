@@ -1,0 +1,9 @@
+﻿namespace Pars.RM.RetailApi.MobileStoreApi.Domain.MSServiceModels.DomainModels.{{ entity.name | string.pascalcase | string.plural }}
+{
+
+    public class {{ entity.name | string.pascalcase }}Entity 
+    {
+        public {{ entity.id_type }} {{ entity.name | string.pascalcase }}Id { get; set; }{{ for propertyItem in entity.properties }}
+        public {{ propertyItem.type }} {{ propertyItem.name | string.pascalcase }} { get; set; }{{ end }}
+    }
+}

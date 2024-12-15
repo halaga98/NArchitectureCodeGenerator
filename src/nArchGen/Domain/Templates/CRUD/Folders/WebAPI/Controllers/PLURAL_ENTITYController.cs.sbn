@@ -1,0 +1,60 @@
+﻿using Microsoft.AspNetCore.Mvc;
+using Pars.Core.Cqrs.Commands;
+using Pars.RM.RetailApi.MobileStoreApi.Business.{{ entity.name | string.pascalcase | string.plural }}.Commands;
+using Pars.RM.RetailApi.MobileStoreApi.Domain.MSServiceModels.MSRequestModels.{{ entity.name | string.pascalcase | string.plural }};
+using Pars.RM.RetailApi.MobileStoreApi.Domain.MSServiceModels.MSResponseModels.{{ entity.name | string.pascalcase | string.plural}};
+using System.Threading.Tasks;
+
+namespace Pars.RM.RetailApi.MobileStoreApi.API.Controllers
+{
+    [Route("/[controller]")]
+    [ApiController]
+    public class {{ entity.name | string.pascalcase | string.plural }}Controller : ControllerBase
+    {
+        private readonly ICommandSender _commandSender;
+        public {{ entity.name | string.pascalcase | string.plural }}Controller(ICommandSender commandSender)
+        {
+            _commandSender = commandSender;
+        }
+
+        // GetAll işlemi
+        [HttpPost("GetAll{{ entity.name | string.pascalcase | string.plural }}")]
+        public async Task<IActionResult> GetAll{{ entity.name | string.pascalcase | string.plural }}([FromBody] GetAll{{ entity.name | string.pascalcase  }}Request request)
+        {
+            GetAll{{ entity.name | string.pascalcase  }}Command command = new GetAll{{ entity.name | string.pascalcase  }}Command(request);
+            return Ok(await _commandSender.SendAsync<GetAll{{ entity.name | string.pascalcase  }}Command, GetAll{{ entity.name | string.pascalcase }}Response>(command));
+        }
+
+        // Get işlem
+        [HttpPost("Get{{ entity.name | string.pascalcase }}ById")]
+        public async Task<IActionResult> Get{{ entity.name | string.pascalcase }}ById([FromBody] Get{{ entity.name | string.pascalcase }}ByIdRequest request)
+        {
+            Get{{ entity.name | string.pascalcase }}ByIdCommand command = new Get{{ entity.name | string.pascalcase }}ByIdCommand(request);
+            return Ok(await _commandSender.SendAsync<Get{{ entity.name | string.pascalcase }}ByIdCommand, Get{{ entity.name | string.pascalcase }}ByIdResponse>(command));
+        }
+
+        // Create işlemi
+        [HttpPost("Create{{ entity.name | string.pascalcase }}")]
+        public async Task<IActionResult> Create{{ entity.name | string.pascalcase }}([FromBody] Create{{ entity.name | string.pascalcase }}Request request)
+        {
+            Create{{ entity.name | string.pascalcase }}Command command = new Create{{ entity.name | string.pascalcase }}Command(request);
+            return Ok(await _commandSender.SendAsync<Create{{ entity.name | string.pascalcase }}Command, Create{{ entity.name | string.pascalcase }}Response>(command));
+        }
+
+        // Update işlemi
+        [HttpPost("Update{{ entity.name | string.pascalcase }}")]
+        public async Task<IActionResult> Update{{ entity.name | string.pascalcase }}([FromBody] Update{{ entity.name | string.pascalcase }}Request request)
+        {
+            Update{{ entity.name | string.pascalcase }}Command command = new Update{{ entity.name | string.pascalcase }}Command(request);
+            return Ok(await _commandSender.SendAsync<Update{{ entity.name | string.pascalcase }}Command, Update{{ entity.name | string.pascalcase }}Response>(command));
+        }
+
+        // Delete işlemi
+        [HttpPost("Delete{{ entity.name | string.pascalcase }}")]
+        public async Task<IActionResult> Delete{{ entity.name | string.pascalcase }}([FromBody] Delete{{ entity.name | string.pascalcase }}Request request)
+        {
+            Delete{{ entity.name | string.pascalcase }}Command command = new Delete{{ entity.name | string.pascalcase }}Command(request);
+            return Ok(await _commandSender.SendAsync<Delete{{ entity.name | string.pascalcase }}Command, Delete{{ entity.name | string.pascalcase }}Response>(command));
+        }
+    }
+}

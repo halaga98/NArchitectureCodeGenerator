@@ -1,0 +1,9 @@
+﻿namespace Pars.RM.RetailApi.MobileStoreApi.Domain.MSServiceModels.MSRequestModels.{{ entity.name | string.pascalcase | string.plural }}
+{
+
+    public class Update{{ entity.name | string.pascalcase }}Request 
+    {
+         public {{ entity.id_type }} {{ entity.name | string.pascalcase }}Id { get; set; }{{ for propertyItem in entity.properties }}
+        public {{ propertyItem.type }} {{ propertyItem.name | string.pascalcase }} { get; set; }{{ end }}
+    }
+}

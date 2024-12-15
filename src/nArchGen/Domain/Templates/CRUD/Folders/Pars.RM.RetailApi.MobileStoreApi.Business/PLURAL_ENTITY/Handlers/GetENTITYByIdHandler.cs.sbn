@@ -1,0 +1,37 @@
+﻿using Pars.Core.Cqrs.Commands;
+using Pars.RM.RetailApi.MobileStoreApi.Business.{{ entity.name | string.pascalcase| string.plural }}.Commands;
+using Pars.RM.RetailApi.MobileStoreApi.Data.Repository.{{ entity.name | string.pascalcase| string.plural }};
+using Pars.RM.RetailApi.MobileStoreApi.Domain.MSServiceModels.MSResponseModels.{{ entity.name | string.pascalcase | string.plural}};
+using System;
+using System.Threading.Tasks;
+
+namespace Pars.RM.RetailApi.MobileStoreApi.Business.{{ entity.name | string.pascalcase | string.plural}}.Handlers
+{
+    public class Get{{ entity.name | string.pascalcase }}ByIdHandler : ICommandHandler<Get{{ entity.name | string.pascalcase }}ByIdCommand>
+    {
+        private readonly I{{ entity.name | string.pascalcase }}Repository _{{ entity.name | string.camelcase }}Repository;
+        
+        public Get{{ entity.name | string.pascalcase }}ByIdHandler(I{{ entity.name | string.pascalcase }}Repository {{ entity.name | string.camelcase }}Repository)
+        {
+            _{{ entity.name | string.camelcase }}Repository = {{ entity.name | string.camelcase }}Repository;
+        }
+
+        public async Task<CommandResponse> HandleAsync(Get{{ entity.name | string.pascalcase }}ByIdCommand command)
+        {
+            Get{{ entity.name | string.pascalcase }}ByIdResponse get{{ entity.name | string.pascalcase }}ByIdResponse = new Get{{ entity.name | string.pascalcase }}ByIdResponse();
+            
+            try
+            {
+                get{{ entity.name | string.pascalcase }}ByIdResponse.{{ entity.name | string.pascalcase }}Details = await _{{ entity.name | string.camelcase }}Repository.Get{{ entity.name | string.pascalcase }}ById(command.Get{{ entity.name | string.pascalcase }}ByIdRequest);
+            }
+            catch (Exception ex)
+            {
+                get{{ entity.name | string.pascalcase }}ByIdResponse.HasError = true;
+                get{{ entity.name | string.pascalcase }}ByIdResponse.ResultMessage = ex.Message;
+            }
+
+            CommandResponse commandResponse = new CommandResponse(get{{ entity.name | string.pascalcase }}ByIdResponse);
+            return commandResponse;
+        }
+    }
+}
